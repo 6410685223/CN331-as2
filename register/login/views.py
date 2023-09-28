@@ -14,7 +14,7 @@ def login_view(request):
         if user is not None:
             login(request, user)
             if user.groups.filter(name='student').exists():
-                return HttpResponseRedirect(reverse('student_dashboard'))
+                return HttpResponseRedirect(reverse('course_list'))
         return render(request, 'registration/login.html', {'error_message': 'Invalid login credentials'})
     return render(request, 'registration/login.html')  # Display the login page
 

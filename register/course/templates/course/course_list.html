@@ -1,0 +1,28 @@
+{% extends 'course/layout.html' %}
+
+{% block title %}
+    course list
+{% endblock %}
+
+
+{% block content %}
+
+    <h1>All Course</h1>
+
+    <ul>
+    {% for course in courses %}
+    
+    <li> {{ course.course_id }} {{ course.course_name }} {{ course.course_term }}/{{ course.course_year }}
+         <br> Seat Avilable : {{ course.avilable_seat }} Status:
+        {% if course.course_is_open %}
+            Open
+        {% else %}
+            Closed
+        {% endif %}
+    </li>
+
+    {% endfor %}
+    </ul>
+
+
+{% endblock %}
