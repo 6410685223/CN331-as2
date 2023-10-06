@@ -10,16 +10,34 @@
     <h1>All Course</h1>
 
     <ul>
+    <!-- <form method="post" action = "{% url 'add'%}" id="myForm"> -->
     {% for course in courses %}
     
     <li> {{ course.course_id }} {{ course.course_name }} {{ course.course_term }}/{{ course.course_year }}
          <br> Seat Avilable : {{ course.avilable_seat }} Status:
         {% if course.course_is_open %}
-        <form method="post" action = "{% url 'add'%}">
+        <form method="post" action = "{% url 'add'%}" id="myForm">
             {% csrf_token %}
             <input type="hidden" name="course_name" value="{{ course.course_name }}">
             {{ form.as_p }}
-            <input type="submit" value="submit" onclick="this.disabled=true;this.form.submit();">
+            <!-- <button type="submit" >submit</button> -->
+            {% if course.course_id in subject%}
+                <button type="submit" disabled>submit</button>
+            {% else %}
+                <button type="submit" >submit</button>
+            {% endif %}
+             <!-- {% if messages %}
+                {% for message in messages %}
+                    {% if course.course_id in message.message %}
+                        <button type="submit" disabled>submit</button>
+                    {% else %}
+                        <button type="submit" >submit</button>
+                    {% endif %}
+
+                {% endfor %}
+            {%else%} 
+                <button type="submit" >submit</button>
+            {% endif %} -->
         </form>
         {% else %}
             Closed
@@ -27,6 +45,7 @@
     </li>
 
     {% endfor %}
+    <!-- </form> -->
     </ul>
     
 

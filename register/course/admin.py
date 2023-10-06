@@ -10,8 +10,7 @@ class CourseAdmin(admin.ModelAdmin):
 
     @admin.display(description='students')
     def get_students(self, obj):
-
-        return [set(class_of_students.student_name for class_of_students in obj.class_of_students_set.all())]
+        return list(set(class_of_students.student_name for class_of_students in obj.class_of_students_set.all()))
 
 
 # admin.site.register(Course)

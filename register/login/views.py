@@ -1,9 +1,11 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,HttpResponse
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 
+def home_view(request,*args, **kwargs):
+    return HttpResponseRedirect(reverse('login'))
 
 def login_view(request):
     if request.method == 'POST':
