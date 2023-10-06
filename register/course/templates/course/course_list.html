@@ -15,7 +15,12 @@
     <li> {{ course.course_id }} {{ course.course_name }} {{ course.course_term }}/{{ course.course_year }}
          <br> Seat Avilable : {{ course.avilable_seat }} Status:
         {% if course.course_is_open %}
-            Open
+        <form method="post" action = "{% url 'add'%}">
+            {% csrf_token %}
+            <input type="hidden" name="course_name" value="{{ course.course_name }}">
+            {{ form.as_p }}
+            <input type="submit" value="submit" onclick="this.disabled=true;this.form.submit();">
+        </form>
         {% else %}
             Closed
         {% endif %}
@@ -23,6 +28,6 @@
 
     {% endfor %}
     </ul>
-
+    
 
 {% endblock %}

@@ -17,5 +17,3 @@ def login_view(request):
                 return HttpResponseRedirect(reverse('course_list'))
         return render(request, 'registration/login.html', {'error_message': 'Invalid login credentials'})
     return render(request, 'registration/login.html')  # Display the login page
-
-
