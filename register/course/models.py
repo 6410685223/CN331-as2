@@ -37,5 +37,5 @@ class class_of_students(models.Model):
     course = models.ManyToManyField(Course)
     
 
-    # def __str__(self) :
-    #     return f"{self.student_id} {self.student_surname} {self.student_lasname}: {self.course_name}"
+    def __str__(self) :
+        return f"{self.student_id} {self.student_name} {self.student_lastname}"
