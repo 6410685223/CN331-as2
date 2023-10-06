@@ -4,5 +4,14 @@ from django.contrib import admin
 
 from .models import *
 
-admin.site.register(Course)
+@admin.register(Course)
+class CourseAdmin(admin.ModelAdmin):
+    list_display = ['course_id','course_name','get_students']
+
+    @admin.display(description='students')
+    def get_students(self, obj):
+        return [class_of_students.student_name for class_of_students in obj.class_of_students_set.all()]
+
+
+# admin.site.register(Course)
 admin.site.register(class_of_students)

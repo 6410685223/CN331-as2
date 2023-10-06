@@ -31,11 +31,11 @@ class Course(models.Model):
 
 class class_of_students(models.Model):
 
-    course_name = models.CharField(max_length=30,primary_key=True,unique=True)
     student_id = models.CharField(max_length=10)
-    student_surname = models.CharField(max_length=30)
-    student_lasname = models.CharField(max_length=30)
+    student_name = models.CharField(max_length=30)
+    student_lastname = models.CharField(max_length=30)
+    course = models.ManyToManyField(Course)
     
 
-    def __str__(self) :
-        return f"{self.student_id} {self.student_surname} {self.student_lasname}: {self.course_name}"
+    # def __str__(self) :
+    #     return f"{self.student_id} {self.student_surname} {self.student_lasname}: {self.course_name}"
