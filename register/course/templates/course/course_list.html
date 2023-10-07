@@ -22,22 +22,13 @@
             {{ form.as_p }}
             <!-- <button type="submit" >submit</button> -->
             {% if course.course_id in subject%}
+            {% csrf_token %}
                 <button type="submit" disabled>submit</button>
             {% else %}
+            {% csrf_token %}
                 <button type="submit" >submit</button>
             {% endif %}
-             <!-- {% if messages %}
-                {% for message in messages %}
-                    {% if course.course_id in message.message %}
-                        <button type="submit" disabled>submit</button>
-                    {% else %}
-                        <button type="submit" >submit</button>
-                    {% endif %}
 
-                {% endfor %}
-            {%else%} 
-                <button type="submit" >submit</button>
-            {% endif %} -->
         </form>
         {% else %}
             Closed
@@ -45,8 +36,18 @@
     </li>
 
     {% endfor %}
-    <!-- </form> -->
     </ul>
+    <form method="post" action = "{% url 'get_in_my_course'%}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" >my course</button>
+    </form>
     
+    <form method="post" action = "{% url 'logout'%}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" >log out</button>
+    </form>
 
 {% endblock %}
+

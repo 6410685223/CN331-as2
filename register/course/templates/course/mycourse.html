@@ -1,0 +1,29 @@
+{% extends 'course/layout.html' %}
+
+{% block title %}
+    my course
+{% endblock %}
+
+
+{% block content %}
+    <h1>{{name.student_surname}}  {{name.student_lasname}}</h1>
+    <h2>Course</h2>
+    {% for i in  subject%}
+        <form method="post" action="{% url 'delete_subject'%}">
+            <li>
+            {{i}}
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="hidden" name="course_id" value="{{ i }}">
+            {% csrf_token %}
+            <button type="submit" >delete</button>
+            </li>
+        </form>
+    {% endfor %}
+    <form method="post" action="{% url 'register'%}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        <button type="submit" >Register page</button>
+    </form>
+{% endblock %}

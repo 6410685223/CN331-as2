@@ -5,11 +5,11 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from Students.models import student_info
 from django.contrib import messages
+from django.contrib.auth import logout as auth_logout
 # Create your views here.
 from django.contrib.auth.decorators import login_required
 
 def course_list(request):
-
     courses = Course.objects.all()
     check = set()    
     for i in class_of_students.objects.values_list('student_id','course'):
@@ -39,15 +39,41 @@ def add_to_DB(request):
         student_instance.course.add(course.course_id)
         student_instance.save()
 
-        # print(class_of_students.objects.filter(student_id=request.user).last())
-        check = set()    
-        for i in class_of_students.objects.values_list('student_id','course'):
-            # print(i[0] + " " + request.user)
-            if str(i[0]) == str(request.user):
-                check.add(i[1])
-        messages.success(request, list(check))
-
         # Redirect to the course list page
         return redirect(reverse('add'))
 
     return HttpResponseRedirect(reverse('course_list'))
+
+def get_in_my_course(request):
+    if request.method == 'POST':
+        return redirect(reverse('mycourse'))
+    return HttpResponseRedirect(reverse('course_list'))
+
+def my_course(request):
+    check = set()    
+    for i in class_of_students.objects.values_list('student_id','course'):
+        if str(i[0]) == str(request.user):
+            check.add(i[1])
+    return render(request,'course/mycourse.html',
+            {
+                'subject': check,
+                'name' : student_info.objects.get(student_username=request.user),
+            }
+            )
+
+def delete_subject(request):
+    if request.method == 'POST':
+        class_of_students.objects.get(course=request.POST['course_id']).delete()
+        return redirect(reverse('mycourse'))
+    return redirect(reverse('mycourse'))
+
+def register(request):
+    if request.method == 'POST':
+        return redirect(reverse('course_list'))
+    return redirect(reverse('mycourse'))
+
+def custom_logout(request):
+    if request.method == 'POST':
+        auth_logout(request)
+        return redirect(reverse('login'))
+    return redirect(reverse('course_list'))
