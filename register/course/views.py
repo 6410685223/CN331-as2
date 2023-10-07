@@ -38,7 +38,9 @@ def add_to_DB(request):
         )
         student_instance.course.add(course.course_id)
         student_instance.save()
-
+        course = Course.objects.get(course_name=course_name)
+        course.avilable_seat -= 1
+        course.save()
         # Redirect to the course list page
         return redirect(reverse('add'))
 
@@ -50,10 +52,10 @@ def get_in_my_course(request):
     return HttpResponseRedirect(reverse('course_list'))
 
 def my_course(request):
-    check = set()    
+    check = set()   
     for i in class_of_students.objects.values_list('student_id','course'):
         if str(i[0]) == str(request.user):
-            check.add(i[1])
+            check.add(i[1] + " " + Course.objects.get(course_id=i[1]).course_name.upper())
     return render(request,'course/mycourse.html',
             {
                 'subject': check,
@@ -63,7 +65,10 @@ def my_course(request):
 
 def delete_subject(request):
     if request.method == 'POST':
-        class_of_students.objects.get(course=request.POST['course_id']).delete()
+        class_of_students.objects.get(course=request.POST['course_id'][:5]).delete()
+        course = Course.objects.get(course_id=request.POST['course_id'][:5])
+        course.avilable_seat += 1
+        course.save()
         return redirect(reverse('mycourse'))
     return redirect(reverse('mycourse'))
 

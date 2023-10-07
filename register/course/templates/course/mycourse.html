@@ -1,29 +1,45 @@
 {% extends 'course/layout.html' %}
+{% load static %}
 
 {% block title %}
-    my course
+    My Course
+{% endblock %}
+
+{% block css%}
+    <link rel="stylesheet" href="{%static "course/mcourse.css"%}">
 {% endblock %}
 
 
 {% block content %}
-    <h1>{{name.student_surname}}  {{name.student_lasname}}</h1>
-    <h2>Course</h2>
+    <header>
+        <h1>{{name.student_surname}}  {{name.student_lasname}}</h1>
+    </header>
+
+
+    <main>
+    <div class="content">
+    <h2>My Course</h2>
     {% for i in  subject%}
         <form method="post" action="{% url 'delete_subject'%}">
             <li>
-            {{i}}
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="hidden" name="course_id" value="{{ i }}">
-            {% csrf_token %}
-            <button type="submit" >delete</button>
+                
+                {% csrf_token %}
+                {{ form.as_p }}
+                <p>{{i}} <input type="hidden" name="course_id" value="{{ i }}" ></p>
+                <button type="submit" >delete</button>
             </li>
         </form>
     {% endfor %}
-    <form method="post" action="{% url 'register'%}">
-        {% csrf_token %}
-        {{ form.as_p }}
+    </div>
+    </main>
+    
+
+    <footer>
+        <form method="post" action="{% url 'register'%}">
+            {% csrf_token %}
+            {{ form.as_p }}
         
-        <button type="submit" >Register page</button>
-    </form>
+            <button type="submit" >Register page</button>
+        </form>
+    </footer>
 {% endblock %}

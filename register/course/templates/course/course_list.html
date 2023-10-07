@@ -1,53 +1,64 @@
 {% extends 'course/layout.html' %}
 
+{% load static %}
+
 {% block title %}
     course list
 {% endblock %}
 
+{% block css%}
+    <link rel="stylesheet" href="{%static "course/list.css"%}">
+{% endblock %}
 
 {% block content %}
-
+<header>
     <h1>All Course</h1>
+</header>
 
-    <ul>
+<main>
     <!-- <form method="post" action = "{% url 'add'%}" id="myForm"> -->
-    {% for course in courses %}
-    
-    <li> {{ course.course_id }} {{ course.course_name }} {{ course.course_term }}/{{ course.course_year }}
-         <br> Seat Avilable : {{ course.avilable_seat }} Status:
-        {% if course.course_is_open %}
-        <form method="post" action = "{% url 'add'%}" id="myForm">
-            {% csrf_token %}
-            <input type="hidden" name="course_name" value="{{ course.course_name }}">
-            {{ form.as_p }}
-            <!-- <button type="submit" >submit</button> -->
-            {% if course.course_id in subject%}
-            {% csrf_token %}
-                <button type="submit" disabled>submit</button>
+    <ul>
+        {% for course in courses %}
+        <li> 
+            <p>{{ course.course_id }} {{ course.course_name }} {{ course.course_term }}/{{ course.course_year }}
+            <br> Seat Avilable : {{ course.avilable_seat }}</p>
+            {% if course.course_is_open %}
+                <p>Status : <span class="open"> Open </span></p>
+                <form method="post" action = "{% url 'add'%}" id="myForm">
+                    {% csrf_token %}
+                    <input type="hidden" name="course_name" value="{{ course.course_name }}">
+                    {{ form.as_p }}
+                    <!-- <button type="submit" >submit</button> -->
+                    {% if course.course_id in subject%}
+                        {% csrf_token %}
+                        <button class="csubmit" type="submit" disabled>Already Submit</button>
+                    {% else %}
+                        {% csrf_token %}
+                        <button class="csubmit" type="submit" >Submit</button>
+                    {% endif %}
+                 </form>
             {% else %}
-            {% csrf_token %}
-                <button type="submit" >submit</button>
+                <p>Status : <span class="close"> Close </span></p>
             {% endif %}
-
-        </form>
-        {% else %}
-            Closed
-        {% endif %}
-    </li>
+        </li>
 
     {% endfor %}
     </ul>
-    <form method="post" action = "{% url 'get_in_my_course'%}">
+      
+</main>
+    
+<footer>
+    <form  method="post" action = "{% url 'get_in_my_course'%}">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" >my course</button>
+        <button class="my-course" type="submit" >My course</button>
     </form>
     
-    <form method="post" action = "{% url 'logout'%}">
+    <form  method="post" action = "{% url 'logout'%}">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" >log out</button>
+        <button class="logout" type="submit">Log out</button>
     </form>
-
+</footer>
 {% endblock %}
 

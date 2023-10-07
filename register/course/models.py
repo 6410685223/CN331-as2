@@ -22,6 +22,8 @@ class Course(models.Model):
     def save(self,*args,**kwgrs):
         if (self.avilable_seat == 0):
             self.course_is_open = False
+        else:
+            self.course_is_open = True
         super().save(*args,**kwgrs)
 
     

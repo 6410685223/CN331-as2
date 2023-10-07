@@ -1,0 +1,122 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: linear-gradient(to right, #b92b27, #1565c0)
+}
+
+header{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 20px 0px;
+}
+
+header h1 {
+    text-align: center;
+    background-color: #1d2125;
+    width: 7em;
+    padding: 0.5em;
+    border-radius: 2em;
+    color: #c1ccd8;
+}
+
+main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+li {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-left: 2em ;
+    padding-top: 1em;
+    margin-bottom: 2em;
+    list-style: none;
+    background-color: #1d2125;
+    border-radius: 3em;
+    height: 15em;
+    width: 50em;
+}
+
+li p{
+    color: #c1ccd8;
+    font-size: 2em;
+    margin: 0;
+}
+
+.open{
+    background-color: #2a9c2f;
+    padding: 0.25em;
+    border-radius: 1em;
+    color: white;
+}
+
+.close{
+    background-color: #d32d2d;
+    padding: 0.25em;
+    border-radius: 1em;
+    color: white;
+}
+
+.csubmit{
+    border-radius: 1em;
+    border:1px solid #c1ccd8;
+    background-color: #1d2125;
+    color: #c1ccd8;
+    padding: 0.5em;
+    margin-top: 0.5em;
+    font-size: 1.25em;
+    width: 7em;
+    transition: 0.5s;
+}
+
+.csubmit:hover{
+    background-color: #c1ccd8;
+    color: #1d2125;
+}
+
+.csubmit:disabled{
+    background-color: #c1ccd8;
+    color: #1d2125;
+    width: 10em;
+}
+
+footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+footer form{
+    margin: 20px 15px;
+    font-size: 1.75em;
+}
+
+footer button{
+    padding: 1em;
+    border-radius: 1em;
+    transition: 0.5s;
+}
+
+.my-course{
+    background-color: #91a7c0;
+}
+
+.my-course:hover{
+    background-color: #245083;
+    color: white;
+}
+
+.logout{
+    background-color: #cf3e3e;
+}
+
+.logout:hover{
+    background-color: #971111;
+    color: white;
+}
