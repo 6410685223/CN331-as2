@@ -30,7 +30,7 @@
 โชว์รายชื่อวิชาที่ลงทะเบียนไปแล้ว<br>
 สามารถลบวิชาทีลงทะเบียนไปแล้วได้
 
-## ลิงค์วิดิโอ
+## **[วิดิโอ](<https://tuipied.sharepoint.com/:v:/s/jackkkkkkkkk/EbsmMGDYDGlIlKOd3_xZ-kkBRYROVc-8KdeYH_WxDGZt3Q?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZyIsInJlZmVycmFsQXBwUGxhdGZvcm0iOiJXZWIiLCJyZWZlcnJhbE1vZGUiOiJ2aWV3In19&e=WtXHa5>)**
 
 
 ## ปีกกานต์ เพียรการ 6410615097
