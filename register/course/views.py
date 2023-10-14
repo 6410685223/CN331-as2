@@ -11,7 +11,8 @@ from django.contrib.auth.decorators import login_required
 
 def course_list(request):
     courses = Course.objects.all()
-    check = set()    
+    check = set()   
+    # print(courses)
     for i in class_of_students.objects.values_list('student_id','course'):
         if str(i[0]) == str(request.user):
             check.add(i[1])
@@ -28,21 +29,22 @@ def add_to_DB(request):
         except student_info.DoesNotExist:
             return HttpResponse("Student information not found for this user.")
 
-        course_name = request.POST.get('course_name')
-        course = Course.objects.get(course_name=course_name)
+        course_id = request.POST.get('course_id')
+        course = Course.objects.get(course_id=course_id)
+
         # Create a new Student instance
         student_instance = class_of_students.objects.create(
             student_id=str(student_info_obj.student_username),
             student_name=str(student_info_obj.student_surname),
             student_lastname=str(student_info_obj.student_lasname),
         )
-        student_instance.course.add(course.course_id)
+        student_instance.course.add(course_id)
         student_instance.save()
-        course = Course.objects.get(course_name=course_name)
+        course = Course.objects.get(course_id=course_id)
         course.avilable_seat -= 1
         course.save()
         # Redirect to the course list page
-        return redirect(reverse('add'))
+        return redirect(reverse('course_list'))
 
     return HttpResponseRedirect(reverse('course_list'))
 
@@ -65,6 +67,7 @@ def my_course(request):
 
 def delete_subject(request):
     if request.method == 'POST':
+
         class_of_students.objects.get(course=request.POST['course_id'][:5]).delete()
         course = Course.objects.get(course_id=request.POST['course_id'][:5])
         course.avilable_seat += 1
