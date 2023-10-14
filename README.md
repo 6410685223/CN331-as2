@@ -1,6 +1,5 @@
 # เว็ปไซต์ลงทะเบียนเรียน
 
-## <https://peekice.pythonanywhere.com/>
 
 ## ฝั่งแอดมิน
 
