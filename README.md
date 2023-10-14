@@ -1,6 +1,7 @@
 # เว็ปไซต์ลงทะเบียนเรียน
 
 ## <https://peekice.pythonanywhere.com/>
+## **[วิดิโอ Deploy บน Pythonanywhere](<[https://tuipied.sharepoint.com/:v:/s/jackkkkkkkkk/EbsmMGDYDGlIlKOd3_xZ-kkBRYROVc-8KdeYH_WxDGZt3Q?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZyIsInJlZmVycmFsQXBwUGxhdGZvcm0iOiJXZWIiLCJyZWZlcnJhbE1vZGUiOiJ2aWV3In19&e=WtXHa5](https://tuipied.sharepoint.com/:v:/s/jackkkkkkkkk/Ef2eacNWgR5BnxlCM7TL1PEBD_aGdNJkBsgjmPMfmTwyJw)>)**
 
 ## ฝั่งแอดมิน
 
