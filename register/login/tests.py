@@ -21,10 +21,12 @@ class LoginViewTest(TestCase):
         self.user = User.objects.create_user(username="6410685223",password="kiw123456789")
         self.login_url = reverse('login')
         
-    def test_status_code_after_post(self):
-        response = self.client.post(self.login_url,{'username':'6410685223','password':'kiw123456789'},follow=True)
+    def test_status_code(self):
+        response = self.client.get(self.login_url)
         self.assertEqual(response.status_code,200)
-        
+        self.assertTemplateUsed(response, 'registration/login.html')
+
+
     def test_login_redirect(self):
         response = self.client.post(self.login_url,{'username':'6410685223','password':'kiw123456789'})
         self.assertEqual(response.status_code,302)
@@ -34,5 +36,6 @@ class LoginViewTest(TestCase):
     def test_login_invalid(self):
         response = self.client.post(self.login_url, {'username': 'testuser', 'password': 'wrongpassword'})
         self.assertEqual(response.status_code, 200)  # Expecting a re-render of the login page
+        self.assertTemplateUsed(response, 'registration/login.html')
         self.assertContains(response, 'Invalid login credentials')
         

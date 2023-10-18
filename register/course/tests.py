@@ -10,10 +10,13 @@ class ClassListTestCase(TestCase):
         # set user
         self.user = User.objects.create_user(username='6410685249',password="first123456789")
         self.client.login(username='6410685249', password='first123456789')
-        self.user_info = student_info.objects.create(student_username='6410685249',student_password='first123456789',student_surname="Siriphatson",student_lasname="sringamphong")       
+        self.user_info = student_info.objects.create(student_username='6410685249',student_password='first123456789',
+                                                     student_surname="Siriphatson",student_lasname="sringamphong")       
         # set class
-        self.cn202 = Course(course_id="CN202",course_name="Algorithm 2",course_term="1",course_year="2023",avilable_seat=10,course_is_open=True)
-        self.cn203 = Course(course_id="CN203",course_name="Algorithm 3",course_term="1",course_year="2023",avilable_seat=10,course_is_open=True)
+        self.cn202 = Course(course_id="CN202",course_name="Algorithm 2",course_term="1",course_year="2023",
+                            avilable_seat=10,course_is_open=True)
+        self.cn203 = Course(course_id="CN203",course_name="Algorithm 3",course_term="1",course_year="2023",
+                            avilable_seat=10,course_is_open=True)
         self.cn202.save()
         self.cn203.save()
 
@@ -38,35 +41,29 @@ class ClassListTestCase(TestCase):
 
 class custom_logout(TestCase):
     
-    def test_redirect_status(self):
+    def test_redirect_without_post(self):
         response = self.client.get(reverse('logout'))
         self.assertEqual(response.status_code,302)
-    
-    def test_redirect_logout(self):
+        self.assertRedirects(response, reverse('course_list'))
+
+    def test_redirect_logout_post(self):
         user = User.objects.create_user(username='testuser', password='testpassword')
         self.client.login(username='testuser', password='testpassword')
-
-        # Access the logout view with a POST request
         response = self.client.post(reverse('logout'))
-
-        # Check if the user is redirected to the 'login' page
         self.assertRedirects(response, reverse('login'))
         
-    def test_logout_view_redirect(self):
-        # Access the logout view with a GET request
-        response = self.client.get(reverse('logout'))
-
-        # Check if the user is redirected to the 'course_list' page
-        self.assertRedirects(response, reverse('course_list'))
 
 class RegisterViewTest(TestCase):
     def setUp(self) -> None:
         self.user = User.objects.create_user(username='6410685249', password='first123456789')
         self.client.login(username='6410685249', password='first123456789')
-        self.user_info = student_info.objects.create(student_username='6410685249',student_password='first123456789',student_surname="Siriphatson",student_lasname="sringamphong")       
+        self.user_info = student_info.objects.create(student_username='6410685249',student_password='first123456789',
+                                                     student_surname="Siriphatson",student_lasname="sringamphong")       
 
-        self.cn202 = Course(course_id="CN202",course_name="Algorithm 2",course_term="1",course_year="2023",avilable_seat=10,course_is_open=True)
-        self.cn203 = Course(course_id="CN203",course_name="Algorithm 3",course_term="1",course_year="2023",avilable_seat=10,course_is_open=True)
+        self.cn202 = Course(course_id="CN202",course_name="Algorithm 2",course_term="1",course_year="2023",
+                            avilable_seat=10,course_is_open=True)
+        self.cn203 = Course(course_id="CN203",course_name="Algorithm 3",course_term="1",course_year="2023",
+                            avilable_seat=10,course_is_open=True)
         self.cn202.save()
         self.cn203.save()
         self.temp = class_of_students.objects.create(student_id="6410685249",student_name="Siriphatson",student_lastname="sringamphong")
@@ -74,29 +71,26 @@ class RegisterViewTest(TestCase):
     def test_redirect_mycourse_status(self):
         response = self.client.get(reverse('register'))
         self.assertEqual(response.status_code,302)
-    
-    def test_redirect_mycourse(self):
-
-        response = self.client.get(reverse('register'))
         self.assertRedirects(response,reverse('mycourse'))
-        
+
     def test_redirect_course_list_status(self):
         response = self.client.post(reverse('register'))
         self.assertEqual(response.status_code,302)
-    
-    def test_redirect_coures_list(self):
-        response = self.client.post(reverse('register'))
         self.assertRedirects(response,reverse('course_list'))
 
 class Add_to_dbViewTest(TestCase):
         
     def setUp(self):
-        self.cn202 = Course(course_id="CN202",course_name="Algorithm 2",course_term="1",course_year="2023",avilable_seat=10,course_is_open=True)
-        self.cn203 = Course(course_id="CN203",course_name="Algorithm 3",course_term="1",course_year="2023",avilable_seat=10,course_is_open=True)
+        self.cn202 = Course(course_id="CN202",course_name="Algorithm 2",course_term="1",
+                            course_year="2023",avilable_seat=10,course_is_open=True)
+        self.cn203 = Course(course_id="CN203",course_name="Algorithm 3",course_term="1",
+                            course_year="2023",avilable_seat=10,course_is_open=True)
         self.cn202.save()
         self.cn203.save()
-        user_info = student_info.objects.create(student_username='6410685249',student_password='first123456789',student_surname="Siriphatson",student_lasname="sringamphong")       
-        self.temp = class_of_students.objects.create(student_id="6410685249", student_name="Siriphatson", student_lastname="sringamphong")
+        user_info = student_info.objects.create(student_username='6410685249',student_password='first123456789',
+                                                student_surname="Siriphatson",student_lasname="sringamphong")       
+        self.temp = class_of_students.objects.create(student_id="6410685249", 
+                                                student_name="Siriphatson", student_lastname="sringamphong")
         self.temp.course.add("CN202")
 
     def test_redirect_course_list(self):
@@ -106,104 +100,67 @@ class Add_to_dbViewTest(TestCase):
         self.assertRedirects(response,reverse('course_list'))
         self.assertEqual(response.status_code,302)
         
-
     def test_student_info_not_exists(self):
-        # Create a user and a corresponding student_info object
         user = User.objects.create_user(username='6418522350', password='xxx123456789')
-        # Log in the user
         self.client.login(username='6418522350', password='xxx123456789')
-
-        # Access a view that uses the code you provided
-        response = self.client.post(reverse('add'))  # Replace with the actual URL of the view
+        response = self.client.post(reverse('add'))  
         self.assertContains(response, "Student information not found for this user.")
         self.assertEqual(response.status_code,200)
-        
-    def test_avilable_seat_student_info_not_exists(self):
-        self.test_student_info_not_exists()
         self.assertEqual(Course.objects.get(course_id='CN202').avilable_seat, 10)
-        # Check that the response status code is 200 (OK)
+
     def test_student_reverse_course_list(self):
         user = User.objects.create_user(username='6410685249', password='first123456789')
         self.client.login(username='6410685249', password='first123456789')
         response = self.client.post(reverse('add'),{'course_id':'CN202'})
         
         self.assertRedirects(response,reverse('course_list'))
-    
-    def test_status_code_reverse_course_list(self):
-        self.test_student_reverse_course_list()
-        response = self.client.post(reverse('add'),{'course_id':'CN202'})
         self.assertEqual(response.status_code,302)
-        
-    def test_avilable_seat_student_info_exists(self):
-        self.test_student_reverse_course_list()
         self.assertEqual(Course.objects.get(course_id='CN202').avilable_seat,9)
 
 class GetMyCourseTest(TestCase):
     def test_HttpResponseRedirect(self):
         reponse = self.client.get(reverse('get_in_my_course'))
         self.assertRedirects(reponse,reverse('course_list'))
-
-    def test_status_code_HttpResponseRedirect(self):
-        reponse = self.client.get(reverse('get_in_my_course'))
         self.assertEqual(reponse.status_code,302)
-    
+
     def test_redirect_my_course(self):
         self.user = User.objects.create_user(username='6410685249', password='first123456789')
         self.client.login(username='6410685249', password='first123456789')
-        self.user_info = student_info.objects.create(student_username='6410685249',student_password='first123456789',student_surname="Siriphatson",student_lasname="sringamphong")       
+        self.user_info = student_info.objects.create(student_username='6410685249',student_password='first123456789'
+                                                     ,student_surname="Siriphatson",student_lasname="sringamphong")       
 
         reponse = self.client.post(reverse('get_in_my_course'))
         self.assertRedirects(reponse,reverse('mycourse'))
-    
-    def test_redirect_my_course_status_code(self):
-        self.user = User.objects.create_user(username='6410685249', password='first123456789')
-        self.client.login(username='6410685249', password='first123456789')
-        self.user_info = student_info.objects.create(student_username='6410685249',student_password='first123456789',student_surname="Siriphatson",student_lasname="sringamphong")       
-
-        reponse = self.client.post(reverse('get_in_my_course'))
         self.assertEqual(reponse.status_code,302)
 
 class DeleteCourseTest(TestCase):
     def setUp(self):
-        self.cn202 = Course(course_id="CN202",course_name="Algorithm 2",course_term="1",course_year="2023",avilable_seat=10,course_is_open=True)
-        self.cn203 = Course(course_id="CN203",course_name="Algorithm 3",course_term="1",course_year="2023",avilable_seat=0,course_is_open=True)
+        self.cn202 = Course(course_id="CN202",course_name="Algorithm 2",course_term="1",course_year="2023",
+                            avilable_seat=10,course_is_open=True)
+        self.cn203 = Course(course_id="CN203",course_name="Algorithm 3",course_term="1",course_year="2023",
+                            avilable_seat=0,course_is_open=True)
         self.cn202.save()
         self.cn203.save()
         self.temp = class_of_students.objects.create(student_id="6410685249", student_name="Siriphatson", student_lastname="sringamphong")
         self.temp.course.add("CN202")
         self.temp2 = class_of_students.objects.create(student_id="6410685249", student_name="Siriphatson", student_lastname="sringamphong")
         self.temp2.course.add("CN203")
-        
 
     def test_redirect_mycourse(self):
         user = User.objects.create_user(username='6410685249', password='first123456789')
         self.client.login(username='6410685249', password='first123456789')
-        user_info = student_info.objects.create(student_username='6410685249',student_password='first123456789',student_surname="Siriphatson",student_lasname="sringamphong")       
-
+        user_info = student_info.objects.create(student_username='6410685249',student_password='first123456789',
+                                                student_surname="Siriphatson",student_lasname="sringamphong")       
         reponse = self.client.get(reverse('delete_subject'))
         self.assertRedirects(reponse,reverse('mycourse'))
-
-    def test_redirect_mycourse_status_code(self):
-        user = User.objects.create_user(username='6410685249', password='first123456789')
-        self.client.login(username='6410685249', password='first123456789')
-        user_info = student_info.objects.create(student_username='6410685249',student_password='first123456789',student_surname="Siriphatson",student_lasname="sringamphong")       
-
-        reponse = self.client.get(reverse('delete_subject'))
         self.assertEqual(reponse.status_code,302)
-    
     def test_post_redirect_mycourse(self):
         user = User.objects.create_user(username='6410685249', password='first123456789')
         self.client.login(username='6410685249', password='first123456789')
-        user_info = student_info.objects.create(student_username='6410685249',student_password='first123456789',student_surname="Siriphatson",student_lasname="sringamphong")       
-
+        user_info = student_info.objects.create(student_username='6410685249',student_password='first123456789',
+                                                student_surname="Siriphatson",student_lasname="sringamphong")       
         reponse = self.client.post(reverse('delete_subject'),{'course_id':'CN202'})
         self.assertRedirects(reponse,reverse('mycourse'))
-    def test_post_redirect_mycourse_status_code(self):
-        user = User.objects.create_user(username='6410685249', password='first123456789')
-        self.client.login(username='6410685249', password='first123456789')
-        user_info = student_info.objects.create(student_username='6410685249',student_password='first123456789',student_surname="Siriphatson",student_lasname="sringamphong")       
-
-        reponse = self.client.post(reverse('delete_subject'),{'course_id':'CN202'})
         self.assertEqual(reponse.status_code,302)
     
     def test_course_not_open(self):
@@ -232,3 +189,4 @@ class DeleteCourseTest(TestCase):
     def test_student(self):
         user_info = student_info.objects.create(student_username='6410685249',student_password='first123456789',student_surname="Siriphatson",student_lasname="sringamphong")       
         self.assertEqual(str(user_info),'Siriphatson sringamphong: 6410685249 first123456789')
+        
